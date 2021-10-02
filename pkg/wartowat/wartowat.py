@@ -27,7 +27,8 @@ def main(argv):
             print(f'Something went wrong with file {f}')
             break """
         mark_file(f)
-    generate_script(src_path, allcmds)
+    if len(allcmds) > 0:
+        generate_script(src_path, allcmds)
 
 def get_files(src_path):
     return [os.path.join(src_path,f) for f in os.listdir(src_path) if f.endswith('json')]
