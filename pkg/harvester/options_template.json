@@ -1,0 +1,15 @@
+{
+    "files": [],
+    "paths": {
+        "sync": "",
+        "archive": "",
+        "sync_log": ""
+    },
+    "args_sync": [],
+    "cmd_arch": [
+        "7z",
+        "a",
+        "harvest.7z",
+        "<DST>"
+    ]
+}
