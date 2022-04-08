@@ -7,17 +7,16 @@
 #  \ \_\  \ \_\ \_\  \ \_____\  \ \_____\  \/\_____\
 #   \/_/   \/_/\/_/   \/_____/   \/_____/   \/_____/
 #
-# Librarian 3.1.0
+# Librarian 3.1.1
 # SN: 151008
 #
 # Iago Mosquera
 # Script para automatizar tareas de mantenimiento
-# * Comprimir paquetes de archivos
 # * Clasificación de archivos
 # * Limpieza de archivos temporales
 #
 # Versión python.
-# Configurado para cygwin
+# Configurado para WSL
 #
 
 import os
@@ -40,28 +39,28 @@ def main():
     global settings
     global log
 
-    settings = loadData(FILE_SETTINGS)
-    log = setupLogger(FILE_LOG)
+    settings = _loadData(FILE_SETTINGS)
+    log = _setupLogger(FILE_LOG)
 
-    createBoxroomDirs()
-    moveVaultToBoxroom()
-    # Backup would go here <-
-    sortBoxroom()
-    deleteTmp()
-    # makeArchives()
+    _createBoxroomDirs()
+    _moveVaultToBoxroom()
+    _sortBoxroom()
+    _deleteTmp()
 
     log.info("Librarian - ejecucion finalizada")
     print("Finalizado")
 
 
-def loadData(path):
+def _loadData(filepath):
+    location = os.path.dirname(os.path.realpath(__file__))
+    abspath = os.path.join(location, filepath)
     data = {}
-    with open(path, 'r', encoding='utf-8') as datafile:
+    with open(abspath, 'r', encoding='utf-8') as datafile:
         data = json.load(datafile)
     return data
 
 
-def moverArchivos(lista, destino):
+def _moverArchivos(lista, destino):
     if len(lista) >= 1:
         for line in lista:
             subprocess.call(['mv', '-n', line, destino])
@@ -69,7 +68,7 @@ def moverArchivos(lista, destino):
         print("movidos {} archivos a {}".format(len(lista), destino))
 
 
-def clasificarPorRegex(regex):
+def _clasificarPorRegex(regex):
     trastero = settings['dir_boxroom']
     result = subprocess.check_output([
         'find',
@@ -83,23 +82,13 @@ def clasificarPorRegex(regex):
     return result.decode(ENCODING).split('\n')
 
 
-# def comprimirBackup(nombre_arch, destino="/cygdrive/e/archived/Packages/", *entradas):
-#     fuentes = ""
-#     for arch in entradas:
-#         fuentes = fuentes + " " + arch
-
-#     cmd = "zip " + "-FSr " + destino + nombre_arch + " " + fuentes
-
-#     os.system(cmd)
-
-
-def getBoxPath(boxname):
+def _getBoxPath(boxname):
     trastero = settings['dir_boxroom']
 
     return os.path.join(trastero, boxname)
 
 
-def setupLogger(logFileName):
+def _setupLogger(logFileName):
     dir_logs = settings['dir_logs']
 
     if not (os.path.exists(dir_logs)):
@@ -118,7 +107,7 @@ def setupLogger(logFileName):
     return log
 
 
-def createBoxroomDirs():
+def _createBoxroomDirs():
     dir_boxroom = settings['dir_boxroom']
 
     for box in settings['boxroom']:
@@ -128,7 +117,7 @@ def createBoxroomDirs():
             log.info("Creando directorio: {0}".format(path))
 
 
-def moveVaultToBoxroom():
+def _moveVaultToBoxroom():
     vault = settings['dir_vault']
     trastero = settings['dir_boxroom']
     white_dirs = settings['white_dirs']
@@ -143,7 +132,7 @@ def moveVaultToBoxroom():
             mover.remove("")
         if vault in mover:
             mover.remove(vault)
-        moverArchivos(mover, trastero)
+        _moverArchivos(mover, trastero)
     else:
         log.info("Baul vacío. Nada que mover")
 
@@ -160,7 +149,7 @@ def moveVaultToBoxroom():
         mover = result.decode(ENCODING).split('\n')
         if "" in mover:
             mover.remove("")
-        moverArchivos(mover, vault)
+        _moverArchivos(mover, vault)
 
     # Mover directorios
     result = subprocess.check_output([
@@ -180,28 +169,28 @@ def moveVaultToBoxroom():
         for d in white_dirs:
             if os.path.join(dir_descargas, d) in mover:
                 mover.remove(os.path.join(dir_descargas, d))
-        moverArchivos(mover, vault)
+        _moverArchivos(mover, vault)
 
 
-def sortBoxroom():
+def _sortBoxroom():
     boxroom = settings['boxroom']
     trastero = settings['dir_boxroom']
     white_dirs = settings['white_dirs']
 
     for set in boxroom:
-        box = getBoxPath(set['name'])
+        box = _getBoxPath(set['name'])
         regex = ".*\.("
         for ext in set['filetypes'][:-1]:
             regex = regex + ext + "|"
         regex = regex + set['filetypes'][-1] + ")"
         log.debug("Using regex: {0}".format(regex))
-        fileList = clasificarPorRegex(regex)
+        fileList = _clasificarPorRegex(regex)
         if fileList:
             if "" in fileList:
                 fileList.remove("")
-            moverArchivos(fileList, box)
+            _moverArchivos(fileList, box)
 
-    box = getBoxPath(settings['box_misc'])
+    box = _getBoxPath(settings['box_misc'])
     result = subprocess.check_output([
         'find',
         trastero,
@@ -212,7 +201,7 @@ def sortBoxroom():
         mover = result.decode(ENCODING).split('\n')
         if "" in mover:
             mover.remove("")
-        moverArchivos(mover, box)
+        _moverArchivos(mover, box)
 
     result = subprocess.check_output([
         'find',
@@ -230,21 +219,13 @@ def sortBoxroom():
         for d in white_dirs:
             if os.path.join(trastero, d) in mover:
                 mover.remove(os.path.join(trastero, d))
-        moverArchivos(mover, box)
+        _moverArchivos(mover, box)
 
 
-def deleteTmp():
+def _deleteTmp():
     dir_tmp = settings['dir_tmp']
     subprocess.call(['rm', '-rf', dir_tmp])
     print("Directorio temporal eliminado")
-
-
-# def makeArchives():
-#     dir_packages = settings['dir_packages']
-
-#     for set in settings['archives']:
-#         # using * to unpack the list into args
-#         comprimirBackup(set['name'], dir_packages, *set['paths'])
 
 
 if __name__ == '__main__':
