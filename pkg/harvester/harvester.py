@@ -7,8 +7,8 @@
 #  \ \_\  \ \_\ \_\  \ \_____\  \ \_____\  \/\_____\
 #   \/_/   \/_/\/_/   \/_____/   \/_____/   \/_____/
 #
-# Harvester 1.0.2
-# SN: 200627
+# Harvester 1.0.3
+# SN: 220515
 
 import os
 import json
@@ -41,7 +41,7 @@ def main():
     create_filelist(files)
     sync(sync_path, sync_log_path, sync_args)
     runcmd(arch_cmd)
-    runcmd(['rm', os.path.join(arch_path,'harvest.7z')])
+    runcmd(['rm', os.path.join(arch_path, 'harvest.7z')])
     move('harvest.7z', arch_path)
 
 
@@ -61,8 +61,8 @@ def create_filelist(files_list):
 def sync(sync_path, log_path, args):
     cmd_base = [
         'rsync',
-        '-avzh',
-        '--ignore-existing',
+        '-rvzh',
+        '--checksum',
         '--delete',
         '--files-from=filelist.txt',
         '/',
