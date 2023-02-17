@@ -1,4 +1,7 @@
-*/node_modules
-*/.vendor
-*/.bundle
-*/.jekyll-cache
+~/bin/juegos/emuladores/
+~/repositories/video
+**/venv
+**/node_modules
+**/.vendor
+**/.bundle
+**/.jekyll-cache
