@@ -7,6 +7,7 @@ STATS=~/operational/logs/archive_stats.log
 STATSPER=~/operational/logs/archive_stats-earlier.log
 VENV=~/.virtualenvs/borg/bin
 NOTIF=/home/iacus/.local/bin/ntfy
+SND=/usr/share/sounds/freedesktop/stereo/message-new-instant.oga
 
 # Enable venv
 source $VENV/activate
@@ -35,6 +36,7 @@ borg create --stats --verbose --exclude-caches --compression none      \
     ~/.task-readlater           \
     ~/.timewarrior              \
     ~/.screenlayout             \
+    ~/.Rack2                    \
     --exclude-from $EXCL > $STATS 2>&1
 
 # # Prune
@@ -53,6 +55,7 @@ cp $STATS $STATSPER
 # curl "http://192.168.10.141:5000/color?color=000000"
 #$NOTIF -t "Daily backup" send "Backup complete"
 notify-send -t 4000 Backup "Copia de seguridad finalizada" -a "Backup"
+pw-play $SND
 
 # date +"%Y-%m-%d (%H:%M:%S) - borg backup overriden" >> /cygdrive/d/data/logs/borg_stopped.log
 

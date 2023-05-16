@@ -13,7 +13,7 @@ export BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes
 
 echo "ran $(date)" > $DATEFILE
 
-notify-send -t 4000 Backup "Degradando repositorio anterior" -a "Backup"
+#notify-send -t 4000 Backup "Degradando repositorio anterior" -a "Backup"
 
 # # Backup
 borg create --stats --verbose --exclude-caches --compression none      \
@@ -30,4 +30,4 @@ borg prune -s -v --list                  \
     --glob-archives=$PREFIX* >> $STATS 2>&1
 
 
-notify-send -t 4000 Backup "Degradación finalizada" -a "Backup"
+notify-send -t 4000 Backup "Degradación repositorio finalizada" -a "Backup"
