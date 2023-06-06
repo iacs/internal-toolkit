@@ -28,6 +28,7 @@ borg create --stats --verbose --exclude-caches --compression none      \
     ~/repositories              \
     ~/bin/juegos/emuladores/    \
     ~/bin/juegos/if/            \
+    /etc/pkglist.txt            \
     ~/.config                   \
     ~/.local/etc                \
     ~/.vim                      \
@@ -37,6 +38,7 @@ borg create --stats --verbose --exclude-caches --compression none      \
     ~/.timewarrior              \
     ~/.screenlayout             \
     ~/.Rack2                    \
+    ~/.themes                   \
     --exclude-from $EXCL > $STATS 2>&1
 
 # # Prune
