@@ -21,25 +21,30 @@ export BORG_FILES_CACHE_TTL=60
 #$NOTIF -t "Daily backup" send "Backup started"
 notify-send -t 4000 Backup "Copia de seguridad iniciada" -a "Backup"
 
+cp /etc/pkglist.txt ~/operational/logs/pkglist.txt
+
 # # Backup
 borg create --stats --verbose --exclude-caches --compression none      \
+    --exclude-from $EXCL \
     $REPOSITORY::$PREFIX-{now:%Y-%m-%d.%H}      \
     ~/operational               \
     ~/repositories              \
     ~/bin/juegos/emuladores/    \
     ~/bin/juegos/if/            \
-    /etc/pkglist.txt            \
     ~/.config                   \
     ~/.local/etc                \
+    ~/.local/share              \
     ~/.vim                      \
     ~/.task                     \
     ~/.task-project             \
     ~/.task-readlater           \
     ~/.timewarrior              \
     ~/.screenlayout             \
-    ~/.Rack2                    \
     ~/.themes                   \
-    --exclude-from $EXCL > $STATS 2>&1
+    ~/.Rack2                    \
+    /mnt/fastdrive/plugins      \
+    ~/stores/archives/volumes-pulsar \
+    > $STATS 2>&1
 
 # # Prune
 borg prune -s -v --list                  \
