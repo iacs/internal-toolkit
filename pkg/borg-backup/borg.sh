@@ -33,7 +33,6 @@ borg create --stats --verbose --exclude-caches --compression none      \
     ~/bin/juegos/if/            \
     ~/.config                   \
     ~/.local/etc                \
-    ~/.local/share              \
     ~/.vim                      \
     ~/.task                     \
     ~/.task-project             \
