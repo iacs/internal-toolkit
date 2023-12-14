@@ -5,7 +5,8 @@ input=$(echo "" | rofi -dmenu -location 0 -theme-str 'listview {enabled:false;} 
 
 if [ "$input" ]
 then
-  jrnl sc "$input" && notify-send -u low "Added note" "$input" -a "Scratchpad" || notify-send -u high "Could not save note"
+  jrnl sc "$input" && notify-send -u low "Added note" "$input" -a "Scratchpad"
+  #|| notify-send -u high "Could not save note"
 else
   exit 1
 fi
