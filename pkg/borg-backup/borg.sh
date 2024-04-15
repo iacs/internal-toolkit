@@ -40,7 +40,7 @@ borg create --stats --verbose --exclude-caches --compression none      \
     ~/.timewarrior              \
     ~/.screenlayout             \
     ~/.themes                   \
-    ~/.Rack2                    \
+    ~/.local/share/.Rack2       \
     /mnt/fastdrive/plugins      \
     ~/stores/archives/volumes-pulsar \
     > $STATS 2>&1
