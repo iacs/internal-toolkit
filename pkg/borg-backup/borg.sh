@@ -27,20 +27,20 @@ cp /etc/pkglist.txt ~/operational/logs/pkglist.txt
 borg create --stats --verbose --exclude-caches --compression none      \
     --exclude-from $EXCL \
     $REPOSITORY::$PREFIX-{now:%Y-%m-%d.%H}      \
-    ~/operational               \
-    ~/repositories              \
-    ~/bin/juegos/emuladores/    \
-    ~/bin/juegos/if/            \
-    ~/.config                   \
-    ~/.local/etc                \
-    ~/.vim                      \
-    ~/.task                     \
-    ~/.task-project             \
-    ~/.task-readlater           \
-    ~/.timewarrior              \
-    ~/.screenlayout             \
-    ~/.themes                   \
-    ~/.local/share/Rack2        \
+    ~/operational                \
+    ~/repositories               \
+    ~/bin/juegos/hdd/emuladores/ \
+    ~/bin/juegos/if/             \
+    ~/.config                    \
+    ~/.local/etc                 \
+    ~/.vim                       \
+    ~/.task                      \
+    ~/.task-project              \
+    ~/.task-readlater            \
+    ~/.timewarrior               \
+    ~/.screenlayout              \
+    ~/.themes                    \
+    ~/.local/share/Rack2         \
     > $STATS 2>&1
 
 # # Prune
