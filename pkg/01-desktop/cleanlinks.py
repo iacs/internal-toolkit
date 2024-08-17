@@ -9,7 +9,7 @@ def main():
         if file.startswith(prfx):
             clean_name = file.removeprefix(prfx)
             os.rename(file, clean_name)
-            print(f"orig: {file}, changed: {clean_name}")
+            print(f"{file}\t -> {clean_name}")
 
 if __name__ == "__main__":
     main()
