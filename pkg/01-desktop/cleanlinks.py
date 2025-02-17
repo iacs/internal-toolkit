@@ -2,6 +2,7 @@
 
 import os
 
+
 def main():
     all_files = os.listdir()
     for file in all_files:
@@ -11,6 +12,6 @@ def main():
             os.rename(file, clean_name)
             print(f"{file}\t -> {clean_name}")
 
+
 if __name__ == "__main__":
     main()
-

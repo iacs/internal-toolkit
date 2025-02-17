@@ -6,11 +6,12 @@
 import sys
 import subprocess
 
+
 def main():
     if len(sys.argv) < 7:
         print_usage()
         sys.exit(0)
-    
+
     input_file = sys.argv[1]
     output_file = sys.argv[2]
     starting_time = sys.argv[3]
@@ -27,7 +28,8 @@ def main():
         "-i",
         input_file,
         "-filter_complex",
-        f"[0:v]fps={framerate},scale={vscale}:-1,split[a][b];[a]palettegen[p];[b][p]paletteuse",
+        f"[0:v]fps={framerate},scale={
+            vscale}:-1,split[a][b];[a]palettegen[p];[b][p]paletteuse",
         "-loop",
         "0",
         output_file
@@ -47,6 +49,7 @@ def print_usage():
           framerate - target frame rate e.g. 15
           vscale - scale gif vertically to this size in px e.g. 320
     """)
+
 
 if __name__ == "__main__":
     main()
