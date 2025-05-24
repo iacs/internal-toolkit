@@ -29,6 +29,8 @@ borg create --stats --verbose --exclude-caches --compression none      \
     $REPOSITORY::$PREFIX-{now:%Y-%m-%d.%H}      \
     ~/operational                \
     ~/repositories               \
+    /mnt/internal/iacus/stores/heavy_repo          \
+    /mnt/internal/iacus/bin/juegos/emuladores      \
     ~/bin/juegos/hdd/emuladores/ \
     ~/bin/juegos/if/             \
     ~/.config                    \
